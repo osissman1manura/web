@@ -1,0 +1,1101 @@
+`<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSIS SMAN 1 Manuhing Raya</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 0; }
+        .card { border-radius: 18px; transition: transform .24s ease, box-shadow .24s ease; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08); }
+        .footer { background: #343a40; color: white; padding: 20px 0; margin-top: 40px; }
+        .image-preview { max-width: 100px; max-height: 100px; object-fit: cover; border-radius: 0.5rem; }
+        .tab-pane { min-height: 320px; }
+        .home-stat-card { min-height: 120px; }
+        .home-stat-icon { font-size: 1.7rem; }
+        .clickable-card { cursor: pointer; }
+        .clickable-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#home"><i class="fas fa-school"></i> <span id="site-title-nav">OSIS SMAN 1 Manuhing Raya</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" id="main-nav-links">
+                <li class="nav-item"><a class="nav-link" href="#home">Beranda</a></li>
+                <li class="nav-item d-none" id="nav-dashboard"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="#login" id="nav-login">Login</a></li>
+                <li class="nav-item d-none" id="nav-logout"><a class="nav-link" href="#logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <div id="alert-container"></div>
+    <section id="home" class="page-section">
+        <section class="hero text-center mb-5">
+            <div class="container">
+                <h1 class="display-5 mb-3" id="site-title"></h1>
+                <p class="lead" id="site-tagline"></p>
+                <p><small><span id="display-date"></span> | <span id="display-time"></span></small></p>
+            </div>
+        </section>
+        <div class="row gy-4 mb-4" id="home-stats-row">
+            <div class="col-md-3">
+                <div class="card p-4 shadow-sm home-stat-card text-white" style="background: #4f46e5;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="mb-1">Anggota Tersimpan</h6>
+                            <p id="count-members" class="fs-3 mb-0">0</p>
+                        </div>
+                        <i class="fas fa-users home-stat-icon"></i>
+                    </div>
+                    <small>Semua data anggota tersimpan di browser.</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 shadow-sm home-stat-card text-white" style="background: #059669;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="mb-1">Pengumuman</h6>
+                            <p id="count-announcements" class="fs-3 mb-0">0</p>
+                        </div>
+                        <i class="fas fa-bullhorn home-stat-icon"></i>
+                    </div>
+                    <small>Isi pengumuman dan gambar tersimpan otomatis.</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 shadow-sm home-stat-card text-white" style="background: #d97706;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="mb-1">Kegiatan</h6>
+                            <p id="count-activities" class="fs-3 mb-0">0</p>
+                        </div>
+                        <i class="fas fa-calendar-check home-stat-icon"></i>
+                    </div>
+                    <small>Data kegiatan beserta foto tersimpan di situs.</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 shadow-sm home-stat-card text-white" style="background: #be185d;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h6 class="mb-1">Foto Galeri</h6>
+                            <p id="count-gallery" class="fs-3 mb-0">0</p>
+                        </div>
+                        <i class="fas fa-image home-stat-icon"></i>
+                    </div>
+                    <small>Foto disimpan langsung di browser.</small>
+                </div>
+            </div>
+        </div>
+        <div class="row gy-4 mb-4">
+            <div class="col-md-4"><div class="card p-4 shadow-sm h-100"><h5>Visi</h5><p id="vision-text"></p></div></div>
+            <div class="col-md-4"><div class="card p-4 shadow-sm h-100"><h5>Misi</h5><p id="mission-text"></p></div></div>
+            <div class="col-md-4"><div class="card p-4 shadow-sm h-100"><h5>Struktur</h5><p id="structure-text"></p></div></div>
+        </div>
+        <div class="row gy-4 mb-4">
+            <div class="col-md-4"><div class="card p-4 shadow-sm"><h5><i class="fas fa-bullhorn"></i> Pengumuman Terbaru</h5><div id="announcements-list"></div></div></div>
+            <div class="col-md-4"><div class="card p-4 shadow-sm"><h5><i class="fas fa-calendar-alt"></i> Kegiatan Terbaru</h5><div id="activities-list"></div></div></div>
+            <div class="col-md-4"><div class="card p-4 text-center shadow-sm"><h5><i class="fas fa-user-tie"></i> Ketua OSIS</h5><img id="ketua-image" class="img-fluid rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;" src="" alt=""><h6 id="ketua-name"></h6><p id="ketua-period"></p></div></div>
+        </div>
+        <div class="card p-4 shadow-sm mb-4"><h5><i class="fas fa-images"></i> Galeri Foto Kegiatan</h5><div id="gallery-list" class="row g-3"></div></div>
+        <div class="card p-4 shadow-sm mb-4"><h5><i class="fas fa-user-friends"></i> Anggota Terbaru</h5><div id="members-list" class="row g-3"></div></div>
+        <div class="card p-4 shadow-sm mb-4"><h5>Tentang Kami</h5><p id="about-text"></p><p><strong>Alamat:</strong> <span id="address-text"></span><br><strong>Kontak:</strong> <span id="contact-text"></span></p></div>
+    </section>
+    <section id="login" class="page-section d-none">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card p-4 shadow-sm">
+                    <h4 class="mb-3 text-center"><i class="fas fa-sign-in-alt"></i> Login Admin</h4>
+                    <form id="login-form">
+                        <div class="mb-3"><input name="username" class="form-control" placeholder="Username" required></div>
+                        <div class="mb-3"><input type="password" name="password" class="form-control" placeholder="Password" required></div>
+                        <button type="submit" class="btn btn-primary w-100">Masuk</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="dashboard" class="page-section d-none">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4><i class="fas fa-tachometer-alt"></i> Dashboard</h4>
+            <button class="btn btn-secondary" id="logout-btn">Logout</button>
+        </div>
+        <ul class="nav nav-tabs" id="dashboard-tabs" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-tab="anggota">Anggota</button></li>
+            <li class="nav-item"><button class="nav-link" data-tab="pengumuman">Pengumuman</button></li>
+            <li class="nav-item"><button class="nav-link" data-tab="kegiatan">Kegiatan</button></li>
+            <li class="nav-item"><button class="nav-link" data-tab="galeri">Galeri Foto</button></li>
+            <li class="nav-item"><button class="nav-link" data-tab="ketua">Ketua OSIS</button></li>
+            <li class="nav-item"><button class="nav-link" data-tab="settings">Pengaturan</button></li>
+        </ul>
+        <div class="tab-content mt-4">
+            <div class="tab-pane active" data-panel="anggota">
+                <div class="row gy-4">
+                    <div class="col-md-4"><div class="card p-4 shadow-sm"><h5>Tambah Anggota</h5><form id="member-form"><div class="mb-3"><input name="nama" class="form-control" placeholder="Nama" required></div><div class="mb-3"><textarea name="keterangan" class="form-control" placeholder="Keterangan"></textarea></div><div class="mb-3"><input type="file" name="gambar" class="form-control"></div><button type="submit" class="btn btn-success w-100">Simpan</button></form></div></div>
+                    <div class="col-md-8"><div class="card p-4 shadow-sm"><h5>Daftar Anggota</h5><div class="mb-3"><input id="member-search" class="form-control" placeholder="Cari nama..."></div><div id="members-table" class="table-responsive"></div></div></div>
+                </div>
+                <div id="member-edit-card" class="card p-4 shadow-sm mt-4 d-none"><h5>Edit Anggota</h5><form id="member-edit-form"><input type="hidden" name="id"><div class="mb-3"><input name="nama" class="form-control" placeholder="Nama" required></div><div class="mb-3"><textarea name="keterangan" class="form-control" placeholder="Keterangan"></textarea></div><div class="mb-3"><input type="file" name="gambar" class="form-control"></div><button type="submit" class="btn btn-primary">Update</button> <button type="button" class="btn btn-secondary" id="cancel-member-edit">Batal</button></form></div>
+            </div>
+            <div class="tab-pane d-none" data-panel="pengumuman">
+                <div class="row gy-4">
+                    <div class="col-md-4"><div class="card p-4 shadow-sm"><h5>Tambah Pengumuman</h5><form id="announcement-form"><div class="mb-3"><input name="title" class="form-control" placeholder="Judul" required></div><div class="mb-3"><input type="datetime-local" name="datetime" class="form-control" required></div><div class="mb-3"><textarea name="content" class="form-control" placeholder="Isi Pengumuman" required></textarea></div><div class="mb-3"><input type="file" name="images" class="form-control" accept="image/*" multiple></div><button type="submit" class="btn btn-success w-100">Simpan</button></form></div></div>
+                    <div class="col-md-8"><div class="card p-4 shadow-sm"><h5>Daftar Pengumuman</h5><div id="announcements-table" class="table-responsive"></div></div></div>
+                </div>
+                <div id="announcement-edit-card" class="card p-4 shadow-sm mt-4 d-none"><h5>Edit Pengumuman</h5><form id="announcement-edit-form"><input type="hidden" name="id"><div class="mb-3"><input name="title" class="form-control" placeholder="Judul" required></div><div class="mb-3"><input type="datetime-local" name="datetime" class="form-control" required></div><div class="mb-3"><textarea name="content" class="form-control" placeholder="Isi Pengumuman" required></textarea></div><div class="mb-3"><input type="file" name="images" class="form-control" accept="image/*" multiple></div><button type="submit" class="btn btn-primary">Update</button> <button type="button" class="btn btn-secondary" id="cancel-announcement-edit">Batal</button></form></div>
+            </div>
+            <div class="tab-pane d-none" data-panel="kegiatan">
+                <div class="row gy-4">
+                    <div class="col-md-4"><div class="card p-4 shadow-sm"><h5>Tambah Kegiatan</h5><form id="activity-form"><div class="mb-3"><input name="title" class="form-control" placeholder="Judul Kegiatan" required></div><div class="mb-3"><input type="datetime-local" name="datetime" class="form-control" required></div><div class="mb-3"><textarea name="description" class="form-control" placeholder="Deskripsi" required></textarea></div><div class="mb-3"><input type="file" name="images" class="form-control" accept="image/*" multiple></div><button type="submit" class="btn btn-success w-100">Simpan</button></form></div></div>
+                    <div class="col-md-8"><div class="card p-4 shadow-sm"><h5>Daftar Kegiatan</h5><div id="activities-table" class="table-responsive"></div></div></div>
+                </div>
+                <div id="activity-edit-card" class="card p-4 shadow-sm mt-4 d-none"><h5>Edit Kegiatan</h5><form id="activity-edit-form"><input type="hidden" name="id"><div class="mb-3"><input name="title" class="form-control" placeholder="Judul Kegiatan" required></div><div class="mb-3"><input type="datetime-local" name="datetime" class="form-control" required></div><div class="mb-3"><textarea name="description" class="form-control" placeholder="Deskripsi" required></textarea></div><div class="mb-3"><input type="file" name="images" class="form-control" accept="image/*" multiple></div><button type="submit" class="btn btn-primary">Update</button> <button type="button" class="btn btn-secondary" id="cancel-activity-edit">Batal</button></form></div>
+            </div>
+            <div class="tab-pane d-none" data-panel="galeri">
+                <div class="row gy-4">
+                    <div class="col-md-4"><div class="card p-4 shadow-sm"><h5>Tambah Foto Galeri</h5><form id="gallery-form"><div class="mb-3"><input name="title" class="form-control" placeholder="Judul Foto" required></div><div class="mb-3"><textarea name="description" class="form-control" placeholder="Keterangan singkat"></textarea></div><div class="mb-3"><input type="file" name="images" class="form-control" accept="image/*" multiple required></div><small id="gallery-files-count" class="text-muted d-block mb-2">Pilih 1 atau lebih gambar untuk galeri.</small><button type="submit" class="btn btn-success w-100">Simpan</button></form></div></div>
+                    <div class="col-md-8"><div class="card p-4 shadow-sm"><h5>Daftar Galeri</h5><div id="gallery-dashboard-list" class="table-responsive"></div></div></div>
+                </div>
+            </div>
+            <div class="tab-pane d-none" data-panel="ketua">
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-6"><div class="card p-4 shadow-sm"><h5>Edit Ketua OSIS</h5><form id="ketua-form"><div class="mb-3"><input name="nama" class="form-control" placeholder="Nama Ketua" required></div><div class="mb-3"><input type="number" name="periode_start" class="form-control" placeholder="Tahun Mulai" required></div><div class="mb-3"><input type="number" name="periode_end" class="form-control" placeholder="Tahun Akhir" required></div><div class="mb-3"><input type="file" name="gambar" class="form-control"></div><div class="mb-3"><img id="ketua-preview" class="image-preview" src="" alt="Preview"></div><button type="submit" class="btn btn-primary w-100">Update</button></form></div></div>
+                </div>
+            </div>
+            <div class="tab-pane d-none" data-panel="settings">
+                <div class="row justify-content-center mt-3"><div class="col-md-8"><div class="card p-4 shadow-sm mb-4"><h5>Pengaturan Situs</h5><form id="settings-form"><div class="mb-3"><input name="site_title" class="form-control" placeholder="Judul Situs" required></div><div class="mb-3"><input name="tagline" class="form-control" placeholder="Tagline" required></div><div class="mb-3"><textarea name="vision" class="form-control" rows="3" placeholder="Visi" required></textarea></div><div class="mb-3"><textarea name="mission" class="form-control" rows="3" placeholder="Misi" required></textarea></div><div class="mb-3"><textarea name="structure" class="form-control" rows="3" placeholder="Struktur Organisasi" required></textarea></div><div class="mb-3"><input name="address" class="form-control" placeholder="Alamat" required></div><div class="mb-3"><input name="contact" class="form-control" placeholder="Kontak" required></div><div class="mb-3"><input name="current_date" class="form-control" placeholder="Tanggal Saat Ini" required></div><div class="mb-3"><input name="current_time" class="form-control" placeholder="Jam Saat Ini" required></div><div class="mb-3"><textarea name="footer_text" class="form-control" rows="3" placeholder="Teks Footer" required></textarea></div><button type="submit" class="btn btn-primary w-100">Simpan Pengaturan</button></form></div><div class="card p-4 shadow-sm"><h5>Ganti Password Admin</h5><form id="password-form"><div class="mb-3"><input type="password" name="current_password" class="form-control" placeholder="Password Saat Ini" required></div><div class="mb-3"><input type="password" name="new_password" class="form-control" placeholder="Password Baru" required></div><div class="mb-3"><input type="password" name="confirm_password" class="form-control" placeholder="Konfirmasi Password" required></div><button type="submit" class="btn btn-warning w-100">Ubah Password</button></form></div></div></div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="detailModalBody"></div>
+        </div>
+    </div>
+</div>
+<footer class="footer text-center">
+    <div class="container"><p>&copy; <span id="footer-year"></span> <span id="footer-site"></span>. <span id="footer-text"></span></p></div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const storageKeys = {
+    settings: 'osis_settings',
+    members: 'osis_members',
+    announcements: 'osis_announcements',
+    activities: 'osis_activities',
+    gallery: 'osis_gallery',
+    ketua: 'osis_ketua',
+    auth: 'osis_auth'
+};
+
+const defaultStorage = {
+    [storageKeys.auth]: { username: 'admin', password: 'admin' },
+    [storageKeys.settings]: {
+        site_title: 'OSIS SMAN 1 Manuhing Raya',
+        tagline: 'Mewujudkan Generasi Unggul, Berkarakter, dan Berprestasi',
+        address: 'Jl. Raya Manuhing No. 1, Kabupaten Lebak, Banten',
+        contact: '(021) 12345678 | osis@sman1manuhing.sch.id',
+        vision: 'Menjadi organisasi siswa yang unggul dalam membentuk karakter siswa yang berintegritas, inovatif, dan berprestasi di tingkat nasional.',
+        mission: 'Meningkatkan potensi siswa melalui kegiatan ekstrakurikuler; Membangun solidaritas dan kepemimpinan siswa; Menjalin kerjasama dengan pihak sekolah dan masyarakat.',
+        structure: 'Ketua, Wakil Ketua, Sekretaris, Bendahara, dan berbagai bidang seperti Kesiswaan, Olahraga, Seni, dan Kerohanian.',
+        display_date: new Date().toISOString().slice(0, 10),
+        display_time: new Date().toTimeString().slice(0, 8),
+        footer_text: 'Dikembangkan dengan semangat dan dedikasi untuk kemajuan siswa.'
+    },
+    [storageKeys.members]: [],
+    [storageKeys.announcements]: [
+        { id: 1, title: 'Selamat Datang', content: 'Selamat datang di website OSIS SMAN 1 Manuhing Raya', datetime: new Date().toISOString().slice(0, 16), images: [] }
+    ],
+    [storageKeys.activities]: [
+        { id: 1, title: 'Pembinaan Karakter', description: 'Kegiatan pembinaan karakter siswa', datetime: new Date().toISOString().slice(0, 16), images: [] }
+    ],
+    [storageKeys.gallery]: [],
+    [storageKeys.ketua]: [{ id: 1, nama: 'Nama Ketua Default', gambar: '', periode_start: 2024, periode_end: 2025 }]
+};
+
+const state = {
+    currentUser: localStorage.getItem('osis_logged_in') === 'true' ? 'admin' : null,
+    activeTab: 'anggota',
+    editMemberId: null,
+    editAnnouncementId: null,
+    editActivityId: null
+};
+
+// ── IndexedDB untuk galeri (kapasitas besar, tidak terbatas 5MB) ──
+let idb = null;
+function openIDB() {
+    return new Promise((resolve, reject) => {
+        if (idb) { resolve(idb); return; }
+        const req = indexedDB.open('osis_idb', 1);
+        req.onupgradeneeded = e => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains('gallery')) {
+                const store = db.createObjectStore('gallery', { keyPath: 'id', autoIncrement: true });
+                store.createIndex('by_id', 'id', { unique: true });
+            }
+        };
+        req.onsuccess = e => { idb = e.target.result; resolve(idb); };
+        req.onerror = () => reject(req.error);
+    });
+}
+
+function idbGetAll() {
+    return openIDB().then(db => new Promise((resolve, reject) => {
+        const tx = db.transaction('gallery', 'readonly');
+        const req = tx.objectStore('gallery').getAll();
+        req.onsuccess = () => resolve(req.result.reverse()); // terbaru di atas
+        req.onerror = () => reject(req.error);
+    }));
+}
+
+function idbAdd(item) {
+    return openIDB().then(db => new Promise((resolve, reject) => {
+        const tx = db.transaction('gallery', 'readwrite');
+        const req = tx.objectStore('gallery').add(item);
+        req.onsuccess = () => { item.id = req.result; resolve(item); };
+        req.onerror = () => reject(req.error);
+    }));
+}
+
+function idbDelete(id) {
+    return openIDB().then(db => new Promise((resolve, reject) => {
+        const tx = db.transaction('gallery', 'readwrite');
+        const req = tx.objectStore('gallery').delete(id);
+        req.onsuccess = () => resolve();
+        req.onerror = () => reject(req.error);
+    }));
+}
+// ── Akhir IndexedDB ──
+
+function getStorage(key) {
+    const item = localStorage.getItem(key);
+    if (item) {
+        try { return JSON.parse(item); } catch(e) { return null; }
+    }
+    if (defaultStorage[key] !== undefined) {
+        localStorage.setItem(key, JSON.stringify(defaultStorage[key]));
+        return structuredClone(defaultStorage[key]);
+    }
+    return null;
+}
+
+function saveStorage(key, value) {
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch(e) {
+        showAlert('⚠️ Penyimpanan penuh! Hapus beberapa data lama.', 'danger');
+    }
+}
+
+function initStorage() {
+    Object.keys(defaultStorage).forEach(key => {
+        if (key === storageKeys.gallery) return; // galeri pakai IndexedDB
+        if (!localStorage.getItem(key)) {
+            localStorage.setItem(key, JSON.stringify(defaultStorage[key]));
+        }
+    });
+}
+
+function showAlert(message, type = 'success') {
+    const container = document.getElementById('alert-container');
+    container.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>`;
+    setTimeout(() => { container.innerHTML = ''; }, 5000);
+}
+
+function renderHome() {
+    const settings = getStorage(storageKeys.settings);
+    document.getElementById('site-title').textContent = settings.site_title;
+    document.getElementById('site-title-nav').textContent = settings.site_title;
+    document.getElementById('site-tagline').textContent = settings.tagline;
+    document.getElementById('display-date').textContent = settings.display_date;
+    document.getElementById('display-time').textContent = settings.display_time;
+    document.getElementById('vision-text').innerHTML = settings.vision.replace(/\n/g, '<br>');
+    document.getElementById('mission-text').innerHTML = settings.mission.replace(/\n/g, '<br>');
+    document.getElementById('structure-text').innerHTML = settings.structure.replace(/\n/g, '<br>');
+    document.getElementById('address-text').textContent = settings.address;
+    document.getElementById('contact-text').textContent = settings.contact;
+    document.getElementById('footer-site').textContent = settings.site_title;
+    document.getElementById('footer-text').textContent = settings.footer_text;
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    renderHomeAnnouncements();
+    renderHomeActivities();
+    renderHomeMembers();
+    renderGallery();
+    updateHomeStats();
+
+    const ketua = getStorage(storageKeys.ketua)[0];
+    document.getElementById('ketua-image').src = ketua.gambar || 'https://via.placeholder.com/120';
+    document.getElementById('ketua-name').textContent = ketua.nama;
+    document.getElementById('ketua-period').textContent = `Periode ${ketua.periode_start} - ${ketua.periode_end}`;
+    document.getElementById('about-text').textContent = `${settings.site_title} adalah organisasi siswa yang bertujuan mengembangkan potensi siswa dalam bidang akademik, non-akademik, dan sosial.`;
+}
+
+function updateNav() {
+    const loggedIn = state.currentUser !== null;
+    document.getElementById('nav-login').classList.toggle('d-none', loggedIn);
+    document.getElementById('nav-dashboard').classList.toggle('d-none', !loggedIn);
+    document.getElementById('nav-logout').classList.toggle('d-none', !loggedIn);
+}
+
+function showSection(name) {
+    document.querySelectorAll('.page-section').forEach(section => section.classList.add('d-none'));
+    document.querySelectorAll('#main-nav-links .nav-link').forEach(link => link.classList.remove('active'));
+    const section = document.getElementById(name);
+    if (section) section.classList.remove('d-none');
+    document.querySelectorAll('.page-section').forEach(sec => {
+        if (!sec.classList.contains('d-none')) {
+            const id = sec.id;
+            const link = document.querySelector(`#main-nav-links .nav-link[href='#${id}']`);
+            if (link) link.classList.add('active');
+        }
+    });
+    if (name === 'dashboard') {
+        document.getElementById('nav-dashboard').classList.add('active');
+        activateDashboardTab(state.activeTab);
+        renderDashboard();
+    }
+    if (name === 'home') {
+        renderHome();
+    }
+}
+
+function setRoute(route) {
+    if (route === 'logout') {
+        localStorage.removeItem('osis_logged_in');
+        state.currentUser = null;
+        updateNav();
+        showSection('home');
+        showAlert('Logout berhasil.', 'success');
+        return;
+    }
+    if (route === 'dashboard') {
+        if (!state.currentUser) {
+            showSection('login');
+            return;
+        }
+        showSection('dashboard');
+        return;
+    }
+    if (route === 'login') {
+        showSection('login');
+        return;
+    }
+    showSection('home');
+}
+
+function activateDashboardTab(tabName) {
+    state.activeTab = tabName;
+    document.querySelectorAll('#dashboard-tabs button').forEach(button => {
+        button.classList.toggle('active', button.dataset.tab === tabName);
+    });
+    document.querySelectorAll('.tab-pane[data-panel]').forEach(panel => {
+        panel.classList.toggle('d-none', panel.dataset.panel !== tabName);
+        panel.classList.toggle('active', panel.dataset.panel === tabName);
+    });
+}
+
+function renderDashboard() {
+    renderMembers();
+    renderAnnouncements();
+    renderActivities();
+    renderGalleryDashboard();
+    renderKetua();
+    renderSettingsForm();
+}
+
+function renderMembers() {
+    const members = getStorage(storageKeys.members);
+    const search = document.getElementById('member-search').value.toLowerCase();
+    const filtered = members.filter(member => member.nama.toLowerCase().includes(search));
+    const table = document.getElementById('members-table');
+    if (!filtered.length) {
+        table.innerHTML = '<p>Tidak ada data anggota.</p>';
+        return;
+    }
+    table.innerHTML = `<table class="table table-striped"><thead class="table-dark"><tr><th>No</th><th>Nama</th><th>Keterangan</th><th>Gambar</th><th>Aksi</th></tr></thead><tbody>${filtered.map((item, index) => `<tr><td>${index + 1}</td><td>${item.nama}</td><td>${item.keterangan}</td><td>${item.gambar ? `<img src="${item.gambar}" class="image-preview">` : ''}</td><td><button class="btn btn-warning btn-sm me-1" data-action="edit-member" data-id="${item.id}">Edit</button><button class="btn btn-danger btn-sm" data-action="delete-member" data-id="${item.id}">Hapus</button></td></tr>`).join('')}</tbody></table>`;
+}
+
+function renderAnnouncements() {
+    const announcements = getStorage(storageKeys.announcements);
+    const table = document.getElementById('announcements-table');
+    if (!announcements.length) {
+        table.innerHTML = '<p>Tidak ada pengumuman.</p>';
+        return;
+    }
+    table.innerHTML = `<table class="table table-striped"><thead class="table-dark"><tr><th>No</th><th>Judul</th><th>Tanggal</th><th>Gambar</th><th>Aksi</th></tr></thead><tbody>${announcements.map((item, index) => {
+        const images = item.images || (item.image ? [item.image] : []);
+        const imagesHtml = images.map(src => `<img src="${src}" class="image-preview">`).join('');
+        const dateText = item.datetime ? new Date(item.datetime).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : (item.date || '');
+        return `<tr><td>${index + 1}</td><td>${item.title}</td><td>${dateText}</td><td>${imagesHtml}</td><td><button class="btn btn-warning btn-sm me-1" data-action="edit-announcement" data-id="${item.id}">Edit</button><button class="btn btn-danger btn-sm" data-action="delete-announcement" data-id="${item.id}">Hapus</button></td></tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+function renderActivities() {
+    const activities = getStorage(storageKeys.activities);
+    const table = document.getElementById('activities-table');
+    if (!activities.length) {
+        table.innerHTML = '<p>Tidak ada kegiatan.</p>';
+        return;
+    }
+    table.innerHTML = `<table class="table table-striped"><thead class="table-dark"><tr><th>No</th><th>Judul</th><th>Tanggal</th><th>Gambar</th><th>Aksi</th></tr></thead><tbody>${activities.map((item, index) => {
+        const images = item.images || (item.image ? [item.image] : []);
+        const imagesHtml = images.map(src => `<img src="${src}" class="image-preview">`).join('');
+        const dateText = item.datetime ? new Date(item.datetime).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : (item.date || '');
+        return `<tr><td>${index + 1}</td><td>${item.title}</td><td>${dateText}</td><td>${imagesHtml}</td><td><button class="btn btn-warning btn-sm me-1" data-action="edit-activity" data-id="${item.id}">Edit</button><button class="btn btn-danger btn-sm" data-action="delete-activity" data-id="${item.id}">Hapus</button></td></tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+function renderHomeAnnouncements() {
+    const announcements = getStorage(storageKeys.announcements) || [];
+    const announcementsList = document.getElementById('announcements-list');
+    if (!announcements.length) {
+        announcementsList.innerHTML = '<p>Tidak ada pengumuman.</p>';
+        return;
+    }
+    announcementsList.innerHTML = announcements.slice(0, 5).map(a => {
+        const imagesHtml = (a.images || []).map(src => `<img src="${src}" class="img-fluid mb-2 rounded" style="max-height:100px;">`).join('');
+        const datetime = a.datetime || new Date().toISOString().slice(0, 16);
+        return `
+            <div class="card mb-3 clickable-card detail-clickable" data-type="announcement" data-id="${a.id}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">${a.title}</h6>
+                            <small class="text-muted">${new Date(datetime).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}</small>
+                        </div>
+                        <span class="badge bg-primary">Lihat</span>
+                    </div>
+                    ${imagesHtml ? `<div class="mt-2">${imagesHtml}</div>` : ''}
+                    <p class="mb-0 mt-2 text-truncate">${a.content}</p>
+                </div>
+            </div>`;
+    }).join('');
+}
+
+function renderHomeActivities() {
+    const activities = getStorage(storageKeys.activities) || [];
+    const activitiesList = document.getElementById('activities-list');
+    if (!activities.length) {
+        activitiesList.innerHTML = '<p>Tidak ada kegiatan.</p>';
+        return;
+    }
+    activitiesList.innerHTML = activities.slice(0, 5).map(act => {
+        const imagesHtml = (act.images || []).map(src => `<img src="${src}" class="img-fluid mb-2 rounded" style="max-height:100px;">`).join('');
+        const datetime = act.datetime || new Date().toISOString().slice(0, 16);
+        return `
+            <div class="card mb-3 clickable-card detail-clickable" data-type="activity" data-id="${act.id}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1">${act.title}</h6>
+                            <small class="text-muted">${new Date(datetime).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}</small>
+                        </div>
+                        <span class="badge bg-success">Lihat</span>
+                    </div>
+                    ${imagesHtml ? `<div class="mt-2">${imagesHtml}</div>` : ''}
+                    <p class="mb-0 mt-2 text-truncate">${act.description}</p>
+                </div>
+            </div>`;
+    }).join('');
+}
+
+function renderHomeMembers() {
+    const members = getStorage(storageKeys.members) || [];
+    const membersList = document.getElementById('members-list');
+    if (!members.length) {
+        membersList.innerHTML = '<p>Tidak ada anggota.</p>';
+        return;
+    }
+    membersList.innerHTML = members.slice(0, 6).map(member => `
+        <div class="col-6 col-md-4">
+            <div class="card h-100 clickable-card detail-clickable" data-type="member" data-id="${member.id}">
+                <img src="${member.gambar || 'https://via.placeholder.com/300x180'}" class="card-img-top" style="height:160px; object-fit:cover;" alt="${member.nama}">
+                <div class="card-body">
+                    <h6 class="card-title mb-1">${member.nama}</h6>
+                    <p class="card-text text-truncate">${member.keterangan || 'Tidak ada deskripsi.'}</p>
+                </div>
+            </div>
+        </div>`).join('');
+}
+
+function openDetailModal(type, id) {
+    const modalTitle = document.getElementById('detailModalLabel');
+    const modalBody = document.getElementById('detailModalBody');
+    let item = null;
+    let html = '';
+    if (type === 'announcement') {
+        item = getStorage(storageKeys.announcements).find(a => a.id === id);
+        if (!item) return;
+        modalTitle.textContent = item.title;
+        const imagesHtml = (item.images || []).map(src => `<img src="${src}" class="img-fluid rounded mb-3" alt="${item.title}">`).join('');
+        html = `<p class="text-muted">${new Date(item.datetime || new Date().toISOString()).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' })}</p>${imagesHtml}<p>${item.content}</p>`;
+    } else if (type === 'activity') {
+        item = getStorage(storageKeys.activities).find(a => a.id === id);
+        if (!item) return;
+        modalTitle.textContent = item.title;
+        const imagesHtml = (item.images || []).map(src => `<img src="${src}" class="img-fluid rounded mb-3" alt="${item.title}">`).join('');
+        html = `<p class="text-muted">${new Date(item.datetime || new Date().toISOString()).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' })}</p>${imagesHtml}<p>${item.description}</p>`;
+    } else if (type === 'gallery') {
+        idbGetAll().then(items => {
+            item = items.find(a => a.id === id);
+            if (!item) return;
+            modalTitle.textContent = item.title;
+            const html = `<img src="${item.src}" class="img-fluid rounded mb-3" alt="${item.title}"><p>${item.description || 'Tidak ada keterangan.'}</p>`;
+            modalBody.innerHTML = html;
+            const detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
+            detailModal.show();
+        });
+        return; // keluar awal, modal dibuka di dalam promise
+    } else if (type === 'member') {
+        item = getStorage(storageKeys.members).find(a => a.id === id);
+        if (!item) return;
+        modalTitle.textContent = item.nama;
+        html = `<img src="${item.gambar || 'https://via.placeholder.com/300x180'}" class="img-fluid rounded mb-3" alt="${item.nama}"><p>${item.keterangan || 'Tidak ada keterangan anggota.'}</p>`;
+    }
+    modalBody.innerHTML = html;
+    const detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
+    detailModal.show();
+}
+
+function renderGallery() {
+    const gallery = document.getElementById('gallery-list');
+    gallery.innerHTML = '<p class="mb-0 text-muted"><i class="fas fa-spinner fa-spin"></i> Memuat foto...</p>';
+    idbGetAll().then(galleryItems => {
+        if (!galleryItems.length) {
+            gallery.innerHTML = '<p class="mb-0">Belum ada foto kegiatan.</p>';
+            updateHomeStats();
+            return;
+        }
+        gallery.innerHTML = galleryItems.map(item => `
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm overflow-hidden clickable-card detail-clickable" data-type="gallery" data-id="${item.id}">
+                    <img src="${item.src}" class="card-img-top" style="height:140px; object-fit:cover;" alt="${item.title}">
+                    <div class="card-body py-2 px-2">
+                        <p class="mb-1 small text-muted">Galeri Foto</p>
+                        <p class="mb-0 small fw-semibold">${item.title}</p>
+                        <p class="mb-0 small text-muted">${item.description || ''}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        updateHomeStats();
+    }).catch(() => {
+        gallery.innerHTML = '<p class="text-danger">Gagal memuat galeri.</p>';
+    });
+}
+
+function updateHomeStats() {
+    document.getElementById('count-members').textContent = (getStorage(storageKeys.members) || []).length;
+    document.getElementById('count-announcements').textContent = (getStorage(storageKeys.announcements) || []).length;
+    document.getElementById('count-activities').textContent = (getStorage(storageKeys.activities) || []).length;
+    idbGetAll().then(items => {
+        document.getElementById('count-gallery').textContent = items.length;
+    }).catch(() => {});
+}
+
+function renderGalleryDashboard() {
+    const table = document.getElementById('gallery-dashboard-list');
+    table.innerHTML = '<p class="text-muted"><i class="fas fa-spinner fa-spin"></i> Memuat...</p>';
+    idbGetAll().then(galleryItems => {
+        if (!galleryItems.length) {
+            table.innerHTML = '<p>Tidak ada foto galeri.</p>';
+            return;
+        }
+        table.innerHTML = `<table class="table table-striped"><thead class="table-dark"><tr><th>No</th><th>Judul</th><th>Keterangan</th><th>Foto</th><th>Aksi</th></tr></thead><tbody>${galleryItems.map((item, index) => `<tr><td>${index + 1}</td><td>${item.title}</td><td>${item.description || ''}</td><td>${item.src ? `<img src="${item.src}" class="image-preview">` : ''}</td><td><button class="btn btn-danger btn-sm" data-action="delete-gallery" data-id="${item.id}">Hapus</button></td></tr>`).join('')}</tbody></table>`;
+    }).catch(() => {
+        table.innerHTML = '<p class="text-danger">Gagal memuat galeri.</p>';
+    });
+}
+
+function renderKetua() {
+    const ketua = getStorage(storageKeys.ketua)[0];
+    const form = document.getElementById('ketua-form');
+    form.nama.value = ketua.nama;
+    form.periode_start.value = ketua.periode_start;
+    form.periode_end.value = ketua.periode_end;
+    document.getElementById('ketua-preview').src = ketua.gambar || 'https://via.placeholder.com/100';
+}
+
+function renderSettingsForm() {
+    const settings = getStorage(storageKeys.settings);
+    const form = document.getElementById('settings-form');
+    form.site_title.value = settings.site_title;
+    form.tagline.value = settings.tagline;
+    form.vision.value = settings.vision;
+    form.mission.value = settings.mission;
+    form.structure.value = settings.structure;
+    form.address.value = settings.address;
+    form.contact.value = settings.contact;
+    form.current_date.value = settings.display_date;
+    form.current_time.value = settings.display_time;
+    form.footer_text.value = settings.footer_text;
+}
+
+function readImageFile(file, callback) {
+    const reader = new FileReader();
+    reader.onload = () => callback(reader.result);
+    reader.readAsDataURL(file);
+}
+
+function readImageFiles(files, callback) {
+    const readers = Array.from(files).map(file => new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+    }));
+    Promise.all(readers).then(callback);
+}
+
+function setPreviewImage(inputElement, previewElementId) {
+    const preview = document.getElementById(previewElementId);
+    const file = inputElement.files[0];
+    if (file) {
+        readImageFile(file, dataUrl => {
+            preview.src = dataUrl;
+            preview.classList.remove('d-none');
+        });
+    } else {
+        preview.src = '';
+        preview.classList.add('d-none');
+    }
+}
+
+function bindEvents() {
+    document.querySelectorAll('#main-nav-links .nav-link').forEach(link => {
+        link.addEventListener('click', event => {
+            const target = event.target.getAttribute('href').substring(1);
+            setRoute(target);
+        });
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', () => setRoute('logout'));
+
+    const memberFileInput = document.querySelector('#member-form input[name="gambar"]');
+    if (memberFileInput) {
+        memberFileInput.addEventListener('change', event => setPreviewImage(event.target, 'member-image-preview'));
+    }
+    const galleryFileInput = document.querySelector('#gallery-form input[name="images"]');
+    if (galleryFileInput) {
+        galleryFileInput.addEventListener('change', event => {
+            const count = event.target.files.length;
+            document.getElementById('gallery-files-count').textContent = count > 0 ? `${count} gambar siap disimpan.` : 'Pilih 1 atau lebih gambar untuk galeri.';
+        });
+    }
+
+    document.body.addEventListener('click', event => {
+        const card = event.target.closest('.detail-clickable');
+        if (!card) return;
+        const type = card.dataset.type;
+        const id = Number(card.dataset.id);
+        if (!type || !id) return;
+        openDetailModal(type, id);
+    });
+
+    document.getElementById('login-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const username = form.username.value.trim();
+        const password = form.password.value;
+        const auth = getStorage(storageKeys.auth);
+        if (username === auth.username && password === auth.password) {
+            state.currentUser = username;
+            localStorage.setItem('osis_logged_in', 'true');
+            updateNav();
+            setRoute('dashboard');
+            showAlert('Login berhasil.', 'success');
+        } else {
+            showAlert('Username atau password salah.', 'danger');
+        }
+    });
+
+    document.querySelectorAll('#dashboard-tabs button').forEach(button => {
+        button.addEventListener('click', () => activateDashboardTab(button.dataset.tab));
+    });
+
+    document.getElementById('member-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const members = getStorage(storageKeys.members);
+        const newMember = {
+            id: members.length ? Math.max(...members.map(m => m.id)) + 1 : 1,
+            nama: form.nama.value,
+            keterangan: form.keterangan.value,
+            gambar: ''
+        };
+        const file = form.gambar.files[0];
+        if (file) {
+            readImageFile(file, dataUrl => {
+                newMember.gambar = dataUrl;
+                members.push(newMember);
+                saveStorage(storageKeys.members, members);
+                form.reset();
+                renderMembers();
+                showAlert('Anggota berhasil ditambahkan.');
+            });
+        } else {
+            members.push(newMember);
+            saveStorage(storageKeys.members, members);
+            form.reset();
+            renderMembers();
+            showAlert('Anggota berhasil ditambahkan.');
+        }
+    });
+
+    document.getElementById('member-search').addEventListener('input', renderMembers);
+
+    document.getElementById('members-table').addEventListener('click', event => {
+        const action = event.target.dataset.action;
+        const id = Number(event.target.dataset.id);
+        if (!action || !id) return;
+        if (action === 'edit-member') {
+            const members = getStorage(storageKeys.members);
+            const member = members.find(m => m.id === id);
+            if (!member) return;
+            state.editMemberId = id;
+            document.getElementById('member-edit-card').classList.remove('d-none');
+            const form = document.getElementById('member-edit-form');
+            form.id.value = member.id;
+            form.nama.value = member.nama;
+            form.keterangan.value = member.keterangan;
+        }
+        if (action === 'delete-member') {
+            const members = getStorage(storageKeys.members).filter(m => m.id !== id);
+            saveStorage(storageKeys.members, members);
+            renderMembers();
+            showAlert('Anggota berhasil dihapus.', 'success');
+        }
+    });
+
+    document.getElementById('member-edit-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const id = Number(form.id.value);
+        const members = getStorage(storageKeys.members);
+        const index = members.findIndex(m => m.id === id);
+        if (index === -1) return;
+        const file = form.gambar.files[0];
+        const updateMember = () => {
+            members[index].nama = form.nama.value;
+            members[index].keterangan = form.keterangan.value;
+            saveStorage(storageKeys.members, members);
+            renderMembers();
+            form.reset();
+            document.getElementById('member-edit-card').classList.add('d-none');
+            showAlert('Anggota berhasil diperbarui.');
+        };
+        if (file) {
+            readImageFile(file, dataUrl => {
+                members[index].gambar = dataUrl;
+                updateMember();
+            });
+        } else {
+            updateMember();
+        }
+    });
+
+    document.getElementById('cancel-member-edit').addEventListener('click', () => {
+        document.getElementById('member-edit-form').reset();
+        document.getElementById('member-edit-card').classList.add('d-none');
+    });
+
+    document.getElementById('announcement-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const announcements = getStorage(storageKeys.announcements);
+        const newAnnouncement = { id: announcements.length ? Math.max(...announcements.map(a => a.id)) + 1 : 1, title: form.title.value, content: form.content.value, datetime: form.datetime.value, images: [] };
+        const files = form.images.files;
+        const saveAnnouncement = () => {
+            announcements.unshift(newAnnouncement);
+            saveStorage(storageKeys.announcements, announcements);
+            form.reset();
+            renderAnnouncements();
+            showAlert('Pengumuman berhasil ditambahkan.');
+        };
+        if (files.length) {
+            readImageFiles(files, dataUrls => {
+                newAnnouncement.images = dataUrls;
+                saveAnnouncement();
+            });
+        } else {
+            saveAnnouncement();
+        }
+    });
+
+    document.getElementById('announcements-table').addEventListener('click', event => {
+        const action = event.target.dataset.action;
+        const id = Number(event.target.dataset.id);
+        if (!action || !id) return;
+        const announcements = getStorage(storageKeys.announcements);
+        if (action === 'edit-announcement') {
+            const item = announcements.find(a => a.id === id);
+            if (!item) return;
+            state.editAnnouncementId = id;
+            document.getElementById('announcement-edit-card').classList.remove('d-none');
+            const form = document.getElementById('announcement-edit-form');
+            form.id.value = item.id;
+            form.title.value = item.title;
+            form.datetime.value = item.datetime || item.date || new Date().toISOString().slice(0, 16);
+            form.content.value = item.content;
+        }
+        if (action === 'delete-announcement') {
+            saveStorage(storageKeys.announcements, announcements.filter(a => a.id !== id));
+            renderAnnouncements();
+            showAlert('Pengumuman berhasil dihapus.');
+        }
+    });
+
+    document.getElementById('announcement-edit-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const announcements = getStorage(storageKeys.announcements);
+        const index = announcements.findIndex(a => a.id === Number(form.id.value));
+        if (index === -1) return;
+        const files = form.images.files;
+        const updateAnnouncement = () => {
+            announcements[index].title = form.title.value;
+            announcements[index].content = form.content.value;
+            announcements[index].datetime = form.datetime.value;
+            saveStorage(storageKeys.announcements, announcements);
+            renderAnnouncements();
+            document.getElementById('announcement-edit-card').classList.add('d-none');
+            form.reset();
+            showAlert('Pengumuman berhasil diperbarui.');
+        };
+        if (files.length) {
+            readImageFiles(files, dataUrls => {
+                announcements[index].images = dataUrls;
+                updateAnnouncement();
+            });
+        } else {
+            updateAnnouncement();
+        }
+    });
+
+    document.getElementById('cancel-announcement-edit').addEventListener('click', () => {
+        document.getElementById('announcement-edit-form').reset();
+        document.getElementById('announcement-edit-card').classList.add('d-none');
+    });
+
+    document.getElementById('activity-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const activities = getStorage(storageKeys.activities);
+        const newActivity = { id: activities.length ? Math.max(...activities.map(a => a.id)) + 1 : 1, title: form.title.value, description: form.description.value, datetime: form.datetime.value, images: [] };
+        const files = form.images.files;
+        const saveActivity = () => {
+            activities.unshift(newActivity);
+            saveStorage(storageKeys.activities, activities);
+            form.reset();
+            renderActivities();
+            showAlert('Kegiatan berhasil ditambahkan.');
+        };
+        if (files.length) {
+            readImageFiles(files, dataUrls => {
+                newActivity.images = dataUrls;
+                saveActivity();
+            });
+        } else {
+            saveActivity();
+        }
+    });
+
+    document.getElementById('activities-table').addEventListener('click', event => {
+        const action = event.target.dataset.action;
+        const id = Number(event.target.dataset.id);
+        if (!action || !id) return;
+        const activities = getStorage(storageKeys.activities);
+        if (action === 'edit-activity') {
+            const item = activities.find(a => a.id === id);
+            if (!item) return;
+            state.editActivityId = id;
+            document.getElementById('activity-edit-card').classList.remove('d-none');
+            const form = document.getElementById('activity-edit-form');
+            form.id.value = item.id;
+            form.title.value = item.title;
+            form.datetime.value = item.datetime || item.date || new Date().toISOString().slice(0, 16);
+            form.description.value = item.description;
+        }
+        if (action === 'delete-activity') {
+            saveStorage(storageKeys.activities, activities.filter(a => a.id !== id));
+            renderActivities();
+            showAlert('Kegiatan berhasil dihapus.');
+        }
+    });
+
+    document.getElementById('activity-edit-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const activities = getStorage(storageKeys.activities);
+        const index = activities.findIndex(a => a.id === Number(form.id.value));
+        if (index === -1) return;
+        const files = form.images.files;
+        const updateActivity = () => {
+            activities[index].title = form.title.value;
+            activities[index].description = form.description.value;
+            activities[index].datetime = form.datetime.value;
+            saveStorage(storageKeys.activities, activities);
+            renderActivities();
+            renderHome();
+            form.reset();
+            document.getElementById('activity-edit-card').classList.add('d-none');
+            showAlert('Kegiatan berhasil diperbarui.');
+        };
+        if (files.length) {
+            readImageFiles(files, dataUrls => {
+                activities[index].images = dataUrls;
+                updateActivity();
+            });
+        } else {
+            updateActivity();
+        }
+    });
+
+    document.getElementById('cancel-activity-edit').addEventListener('click', () => {
+        document.getElementById('activity-edit-form').reset();
+        document.getElementById('activity-edit-card').classList.add('d-none');
+    });
+
+    document.getElementById('gallery-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const files = Array.from(form.images.files);
+        const title = form.title.value;
+        const description = form.description.value;
+        if (!files.length) {
+            showAlert('Pilih minimal satu foto untuk galeri.', 'danger');
+            return;
+        }
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = 'Menyimpan...';
+        readImageFiles(files, dataUrls => {
+            const promises = dataUrls.map(src => idbAdd({ title, description, src }));
+            Promise.all(promises).then(() => {
+                form.reset();
+                document.getElementById('gallery-files-count').textContent = 'Pilih 1 atau lebih gambar untuk galeri.';
+                renderGalleryDashboard();
+                renderGallery();
+                showAlert(`${dataUrls.length} foto galeri berhasil ditambahkan.`);
+            }).catch(() => {
+                showAlert('Gagal menyimpan foto. Coba lagi.', 'danger');
+            }).finally(() => {
+                btn.disabled = false;
+                btn.textContent = 'Simpan';
+            });
+        });
+    });
+
+    document.getElementById('gallery-dashboard-list').addEventListener('click', event => {
+        const action = event.target.dataset.action;
+        const id = Number(event.target.dataset.id);
+        if (!action || !id) return;
+        if (action === 'delete-gallery') {
+            if (!confirm('Yakin ingin menghapus foto ini?')) return;
+            idbDelete(id).then(() => {
+                renderGalleryDashboard();
+                renderGallery();
+                showAlert('Foto galeri berhasil dihapus.', 'success');
+            }).catch(() => {
+                showAlert('Gagal menghapus foto.', 'danger');
+            });
+        }
+    });
+
+    document.getElementById('ketua-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const ketua = getStorage(storageKeys.ketua);
+        const file = form.gambar.files[0];
+        const updateKetua = imageUrl => {
+            ketua[0].nama = form.nama.value;
+            ketua[0].periode_start = Number(form.periode_start.value);
+            ketua[0].periode_end = Number(form.periode_end.value);
+            if (imageUrl) ketua[0].gambar = imageUrl;
+            saveStorage(storageKeys.ketua, ketua);
+            renderKetua();
+            showAlert('Data ketua berhasil diperbarui.');
+        };
+        if (file) {
+            readImageFile(file, updateKetua);
+        } else {
+            updateKetua();
+        }
+    });
+
+    document.getElementById('settings-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const settings = {
+            site_title: form.site_title.value,
+            tagline: form.tagline.value,
+            vision: form.vision.value,
+            mission: form.mission.value,
+            structure: form.structure.value,
+            address: form.address.value,
+            contact: form.contact.value,
+            display_date: form.current_date.value,
+            display_time: form.current_time.value,
+            footer_text: form.footer_text.value
+        };
+        saveStorage(storageKeys.settings, settings);
+        renderHome();
+        renderSettingsForm();
+        showAlert('Pengaturan berhasil disimpan.');
+    });
+
+    document.getElementById('password-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.target;
+        const auth = getStorage(storageKeys.auth);
+        const current = form.current_password.value;
+        const next = form.new_password.value;
+        const confirm = form.confirm_password.value;
+        if (current !== auth.password) {
+            showAlert('Password saat ini salah.', 'danger');
+            return;
+        }
+        if (next !== confirm) {
+            showAlert('Konfirmasi password tidak cocok.', 'danger');
+            return;
+        }
+        if (next.length < 5) {
+            showAlert('Password baru minimal 5 karakter.', 'danger');
+            return;
+        }
+        auth.password = next;
+        saveStorage(storageKeys.auth, auth);
+        form.reset();
+        showAlert('Password berhasil diubah.');
+    });
+}
+
+function init() {
+    initStorage();
+    updateNav();
+    renderHome();
+    bindEvents();
+    const hash = window.location.hash.substring(1) || 'home';
+    setRoute(hash);
+    window.addEventListener('hashchange', () => setRoute(window.location.hash.substring(1) || 'home'));
+}
+
+init();
+</script>
+</body>
+</html>
